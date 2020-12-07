@@ -4,7 +4,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-SQLALCHEMY_DATABASE_URI = 'postgres://fqmbdxwkpbcuqi:f23a13e4f3c0a435a77936acb35f3ca5f21913831079cca51ebbe8c08feee72a@ec2-54-208-233-243.compute-1.amazonaws.com:5432/ddbcde6i8m9ph3'
+SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI)
 cur = conn.cursor()
 
@@ -44,7 +44,7 @@ def serialize(data):
                 continue
         else:
             new_data.append(str(d))
-    return {column: new_data[i] for i, column in enumerate(db_columns) }
+    return {column: new_data[i] for i, column in enumerate(db_columns)}
 
 
 @app.errorhandler(404) 
@@ -58,8 +58,11 @@ def not_found(e):
 # A welcome message to test our server
 @app.route('/fundos-investimento')
 def index():
+    limit = request.args.get('limit')
+    if not limit:
+        limit = 100
     try:
-        cur.execute("""SELECT * from fundos_investimento""")
+        cur.execute(f"""SELECT * from fundos_investimento limit {limit}""")
         rows = cur.fetchall()
         print([serialize(r) for r in rows[:2]])
         return jsonify({
