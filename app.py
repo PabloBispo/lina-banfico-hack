@@ -20,4 +20,6 @@ def not_found(e):
 
 @app.route("/")
 def home():
-    return '''<h1>Wellcome to UAG</h1>'''
+    cur.execute(f"""SELECT (html) from html_data""")
+    data = row.fetchone()
+    return data
