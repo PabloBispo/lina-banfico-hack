@@ -21,5 +21,7 @@ def not_found(e):
 @app.route("/")
 def home():
     cur.execute(f"""SELECT (html) from html_data""")
-    data = row.fetchone()
-    return data
+    data = cur.fetchone()
+    if data:
+        data = data[0]
+    return data, 200
