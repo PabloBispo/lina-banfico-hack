@@ -38,7 +38,8 @@ def fazenda():
 
 @app.route("/zip_file")
 def zip_file():
-    return base64.b64encode(open('zip/mercadolivre.zip', 'rb').read()).decode('ascii'), 200
+    #return base64.b64encode(open('zip/mercadolivre.zip', 'rb').read()).decode('ascii'), 200
+    return send_file('zip/mercadolivre.zip')
      
 
 '''
