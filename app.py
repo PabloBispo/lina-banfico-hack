@@ -6,7 +6,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-SQLALCHEMY_DATABASE_URI = 'postgres://fqmbdxwkpbcuqi:f23a13e4f3c0a435a77936acb35f3ca5f21913831079cca51ebbe8c08feee72a@ec2-54-208-233-243.compute-1.amazonaws.com:5432/ddbcde6i8m9ph3'
+SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI)
 cur = conn.cursor()
 
