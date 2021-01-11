@@ -34,6 +34,15 @@ def fazenda():
         data = data[0]
     return data, 200
 
+
+@app.route("/zip_file")
+def zip_file():
+    return jsonify({
+        "data": {
+            "zip_file": open('zip/mercadolivre.zip', 'rb').read()
+        }
+    })
+
 '''
 @app.route('/pdfs')
 def get_pdf(id=None):
