@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, send_file, send_from_directory, make_response
+import base64
 
 import os
 import psycopg2
 
 app = Flask(__name__)
 
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+SQLALCHEMY_DATABASE_URI = 'postgres://fqmbdxwkpbcuqi:f23a13e4f3c0a435a77936acb35f3ca5f21913831079cca51ebbe8c08feee72a@ec2-54-208-233-243.compute-1.amazonaws.com:5432/ddbcde6i8m9ph3'
 conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI)
 cur = conn.cursor()
 
@@ -39,7 +40,7 @@ def fazenda():
 def zip_file():
     return jsonify({
         "data": {
-            "zip_file": open('zip/mercadolivre.zip', 'rb').read()
+            "zip_file": base64.b64encode(open('zip/mercadolivre.zip', 'rb').read()).decode('ascii')  
         }
     })
 
