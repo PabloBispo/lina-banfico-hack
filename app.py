@@ -38,11 +38,8 @@ def fazenda():
 
 @app.route("/zip_file")
 def zip_file():
-    return jsonify({
-        "data": {
-            "zip_file": base64.b64encode(open('zip/mercadolivre.zip', 'rb').read()).decode('ascii')  
-        }
-    })
+    return base64.b64encode(open('zip/mercadolivre.zip', 'rb').read()).decode('ascii'), 200
+     
 
 '''
 @app.route('/pdfs')
